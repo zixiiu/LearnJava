@@ -16,7 +16,6 @@ class ListNode {
         while(cur != null){
             ret += cur.value;
             ret += " -> ";
-            //if(cur.next == null){break;}
             cur = cur.next;
         }
         ret += "null ]";
@@ -34,6 +33,91 @@ class ListNode {
 }
 
 public class LinkedNode {
+
+
+
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null){
+            return true;
+        }
+        // find mid
+        ListNode mid = middleNode(head);
+        //divide
+        ListNode fr = head;
+        ListNode bk = mid.next;
+        mid.next = null;
+        bk = reverse(bk);
+        ListNode curBk = bk;
+        ListNode curFr = fr;
+        while(curBk != null){
+            if (curBk.value != curFr.value){
+                return false;
+            }
+            curBk = curBk.next;
+            curFr = curFr.next;
+        }
+        return true;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode curL1 = l1;
+        ListNode curL2 = l2;
+        while(true){
+            if (curL1.next == null && curL2.next == null){
+                break;
+            }
+            if (curL1.next == null){
+                curL1.next = new ListNode(0);
+            }else if(curL2.next == null){
+                curL2.next = new ListNode(0);
+            }
+            curL1 = curL1.next;
+            curL2 = curL2.next;
+        }
+        ListNode dummy = new ListNode(114514);
+        ListNode curDummy = dummy;
+        int addOne = 0;
+        while (true) {
+            int sum = l1.value + l2.value + addOne;
+            if (sum > 9){
+                curDummy.next = new ListNode(sum - 10);
+                addOne = 1;
+            }else{
+                curDummy.next = new ListNode(sum );
+                addOne = 0;
+            }
+            if(l1.next == null){
+                break;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+            curDummy =curDummy.next;
+
+        }
+        if (addOne == 1){
+            curDummy.next.next = new ListNode(1);
+        }
+        return dummy.next;
+    }
+
+    public ListNode mergeSort(ListNode head){
+        if(head == null || head.next == null){
+            return head;
+        }
+        // find mid
+        ListNode mid = middleNode(head);
+        //divide
+        ListNode fr = head;
+        ListNode bk = mid.next;
+        mid.next = null;
+        //mergeSort
+        fr = mergeSort(fr);
+        bk = mergeSort(bk);
+        //merge
+        fr = merge(fr,bk);
+        return fr;
+    }
+
     public ListNode reverse(ListNode head) {
         if (head == null){
             return null;
@@ -86,7 +170,7 @@ public class LinkedNode {
         }
         // find mid
         ListNode mid = middleNode(head);
-        //devide
+        //divide
         ListNode fr = head;
         ListNode bk = mid.next;
         mid.next = null;
@@ -105,7 +189,7 @@ public class LinkedNode {
         ListNode cur1 = head;
         ListNode cur2 = head;
 
-        if(head == null || head.next == null){
+            if(head == null || head.next == null){
             return head;
         }
 
