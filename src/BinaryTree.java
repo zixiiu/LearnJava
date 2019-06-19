@@ -1,9 +1,6 @@
 import com.sun.source.tree.Tree;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 class TreeNode{
     TreeNode left;
@@ -46,13 +43,28 @@ class TreeNode{
         toGo.offer(this);
         TreeNode cur = this;
         int newLineCounter = 0;
-        int newLineLimit = 1;
+        int newLineLimit = 2;
+
+        res += Integer.toString(cur.key);
+        res += '\n';
+
         while (!toGo.isEmpty()){
             cur = toGo.poll();
-            res += Integer.toString(cur.key);
-            if (cur.left != null) toGo.offer(cur.left);
-            if (cur.right != null) toGo.offer(cur.right);
-            newLineCounter++;
+            if (cur.left != null){
+                res += Integer.toString(cur.left.key);
+                toGo.offer(cur.left);
+            }else{
+                res += ' ';
+            }
+            res += '\t';
+            if (cur.right != null) {
+                res += Integer.toString(cur.right.key);
+                toGo.offer(cur.right);
+            }else{
+                res += ' ';
+            }
+            res += '\t';
+            newLineCounter+=2;
             if (newLineCounter == newLineLimit){
                 res += "\n";
                 newLineCounter = 0;
@@ -64,6 +76,81 @@ class TreeNode{
 
 }
 public class BinaryTree {
+
+    public void postOrderTravIter(TreeNode root){
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode prev = null;
+        stack.offerFirst(root);
+        while (!stack.isEmpty()){
+            TreeNode cur = stack.peek();
+            if(prev == null || prev.left == cur || prev.right == cur){// go left
+                if (cur.left == null){
+                    System.out.print(cur.key);
+                    stack.pollFirst();
+                }else {
+                    stack.offerFirst(cur.left);
+                }
+            }else if(cur.left == prev){//go right
+                if (cur.right == null) {
+                    System.out.print(cur.key);
+                    stack.pollFirst();
+                }else{
+                    stack.offerFirst(cur.right);
+                }
+            }else if(cur.right == prev){//go up
+                System.out.print(cur.key);
+                stack.pollFirst();
+            }
+            prev = cur;
+        }
+
+
+    }
+
+    public void inOrderTravIter(TreeNode root){
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode helper = root;
+        while(!stack.isEmpty() || helper != null){
+            if (helper == null){
+                helper = stack.pollFirst();
+                System.out.print(helper.key);
+                helper = helper.right;
+            }else{
+                stack.offerFirst(helper);
+                helper = helper.left;
+
+            }
+        }
+    }
+    public void preOrderTravIter(TreeNode root){
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        if (root != null) stack.offerFirst(root);
+        TreeNode cur;
+        while (!stack.isEmpty()){
+            cur = stack.pollFirst();
+            System.out.print(cur.key);
+            if (cur.right != null) stack.offerFirst(cur.right);
+            if (cur.left != null) stack.offerFirst(cur.left);
+        }
+    }
+    public void preOrderTravRecur(TreeNode root){
+        if (root == null) return;
+        System.out.print(root.key);
+        preOrderTravRecur(root.left);
+        preOrderTravRecur(root.right);
+    }
+    public void inOrderTravRecur(TreeNode root){
+        if (root == null) return;
+        inOrderTravRecur(root.left);
+        System.out.print(root.key);
+        inOrderTravRecur(root.right);
+    }
+    public void postOrderTravRecur(TreeNode root){
+        if (root == null) return;
+        postOrderTravRecur(root.left);
+        postOrderTravRecur(root.right);
+        System.out.print(root.key);
+    }
     public int getHeight(TreeNode root){
         if(root == null) return 0;
         return Math.max(getHeight(root.left), getHeight(root.right)) + 1;
