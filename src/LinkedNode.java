@@ -1,5 +1,6 @@
 import java.util.List;
 
+
 class ListNode {
     public int value;
     public ListNode next;
@@ -136,6 +137,14 @@ public class LinkedNode {
             n = n.next;
         }
         return p;
+    }
+
+    public ListNode reverseRecu(ListNode head) {
+        if (head.next  == null) return head;
+
+        ListNode curr = reverseRecu(head.next);
+        head.next.next = head;
+        return curr;
     }
 
     public ListNode merge(ListNode one, ListNode two) {

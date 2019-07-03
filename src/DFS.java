@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.lang.String;
 
 public class DFS {
     public List<String> subSets(String set) {
@@ -92,6 +90,32 @@ public class DFS {
             permutations(set, tmpRes, res);
             set.insert(i,thisChar);
             tmpRes.deleteCharAt(tmpRes.length() - 1);
+
+        }
+    }
+    public List<String> permutationsRep(String set) {
+        List<String> res = new ArrayList<>();
+        StringBuilder fullString = new StringBuilder(set);
+        permutationsRep(fullString, new StringBuilder(), res);
+        return res;
+    }
+
+    private void permutationsRep(StringBuilder set, StringBuilder tmpRes, List<String> res) {
+        if (set.length() == 0) {
+            res.add(tmpRes.toString());
+            return;
+        }
+        Set<Character> visited = new HashSet<>();
+        for(int i = 0; i < set.length(); i++){
+            char thisChar = set.charAt(i);
+            if(!visited.contains(thisChar)) {
+                visited.add(thisChar);
+                tmpRes.append(thisChar);
+                set.deleteCharAt(i);
+                permutationsRep(set, tmpRes, res);
+                set.insert(i, thisChar);
+                tmpRes.deleteCharAt(tmpRes.length() - 1);
+            }
 
         }
     }

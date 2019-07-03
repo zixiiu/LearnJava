@@ -5,10 +5,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class Main {
 
     public static void main(String[] args) {
-        int testNo = 7;
+        int testNo = 12;
         if(testNo == 1){ //QuickSort
             int[] testSet = new int[]{4,2,5,4,7,5,9,4,8,6,9,3,6,0};
             int[] resSet;
@@ -110,12 +111,53 @@ public class Main {
             testGraph.add(node2);
             System.out.println(sol.isBipartiteIter(testGraph));
         }else if(testNo == 9){
+            StringProbs sol = new StringProbs();
+            String[] test = new String[]{"a","a","b"};
+            String[] res = sol.topKFrequent(test,2);
+            //System.out.println(Arrays.toString(res));
+            //System.out.println(sol.remove("abcde","cd"));
+            //System.out.println(sol.removeSpaces("   "));
+            //System.out.println(sol.deDup("abbbccd"));
+            //System.out.println(sol.deDup2NoStack("aabccdc"));
+            System.out.println(sol.replace("abcdefghicdeasfwecdeaweasc","cde","xxxx"));
+            //System.out.println(sol.allOccurance("abcdefghicdeasfwecdeaweasc", "cde"));
+            System.out.println(Arrays.toString(sol.reorder(new int[]{1,2,3,4,5,6,7,8})));
+            System.out.println(sol.compress("aaaabbbbccccddde"));
+            System.out.println(sol.decompress("a4b4c4d4"));
+            sol.allAnagrams("ababacbbaac","aab");
 
+
+        }else if(testNo == 10){
+            HashProbs sol = new HashProbs();
+            List<Integer> commonTest1 = Arrays.asList(1,1,2,3);
+            List<Integer> commonTest2 = Arrays.asList(1,1,1,1,1,2,3);
+            List<Integer> res = sol.commonHashMap(commonTest1,commonTest2);
+            System.out.println(res);
+
+        }else if(testNo == 11){ //bit
+            Bit sol = new Bit();
+            sol.allUnique("lodqomabca");
+            sol.hex(15);
+            LinkedNode sol2 = new LinkedNode();
+            ListNode head = ListNode.fromArray(new int[]{2,7,5,9,4,8,6,9,1,35,5,6});
+            ListNode res = sol2.reverseRecu(head);
+            //System.out.println(res.toStringAfter());
+
+        }else if(testNo == 12){//exam1
+            Exam1 sol = new Exam1();
+            ListNode head = ListNode.fromArray(new int[]{2,7,5,9,4,8,6,9,1,35,5,6});
+            ListNode res = sol.reverseIter(head);
+            System.out.println(res.toStringAfter());
+            head = ListNode.fromArray(new int[]{2,7,5,9,4,8,6,9,1,35,5,6});
+            res = sol.reverseRecur(head);
+            System.out.println(res.toStringAfter());
+            System.out.println(sol.kTHsmallest(new int[]{1,3,5},new int[]{2,3,4}, 6));
+            System.out.println(sol.removeSpace("     I love   yahoo    "));
         }
+
 
     }
 }
-
 
 
 
