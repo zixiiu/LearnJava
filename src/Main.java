@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        int testNo = 12;
+        int testNo = 14;
         if(testNo == 1){ //QuickSort
             int[] testSet = new int[]{4,2,5,4,7,5,9,4,8,6,9,3,6,0};
             int[] resSet;
@@ -153,6 +153,24 @@ public class Main {
             System.out.println(res.toStringAfter());
             System.out.println(sol.kTHsmallest(new int[]{1,3,5},new int[]{2,3,4}, 6));
             System.out.println(sol.removeSpace("     I love   yahoo    "));
+        }else if(testNo == 13) {//recur2
+            RecurII sol = new RecurII();
+            sol.nqueens(1);
+            sol.spiralGenerate(6);
+            TreeNode root = TreeNode.fromArrayBalanced(new Integer[]{7,3,6,2,5,11,18,1,4,6,12,20});
+            sol.lowestCommonAncestor(root,root.left.left.left, root.left.left.right);
+        }else if(testNo == 14){//dp
+            DP sol = new DP();
+            sol.fibonacci(2);
+            sol.longest(new int[]{4,3,2,1});
+            sol.maxProduct(25);
+            sol.canJump(new int[]{1,1,6,1,1});
+            sol.minJumpLast(new int[]{4,2,1,3,2,1,1,4});
+            sol.largestSum(new int[]{1,2,-3});
+            sol.canBreak("bcdbcdabc",new String[]{"abc","bcd","def"});
+            sol.editDistance("abcde","efghi");
+            sol.largest(new int[][]{{0,1},{1,0}});
+            sol.maxProfit3(new int[]{3,4,1,2,6,2,3,5,1,7,3,8});
         }
 
 
