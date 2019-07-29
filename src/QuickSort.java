@@ -50,6 +50,5 @@ public class QuickSort {
         mem = array[j];
         array[j] = array[i];
         array[i]=mem;
-
     }
 }
