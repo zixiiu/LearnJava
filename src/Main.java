@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int testNo = 16;
+        int testNo = 17;
         if (testNo == 1) { //QuickSort
             int[] testSet = new int[]{4, 2, 5, 4, 7, 5, 9, 4, 8, 6, 9, 3, 6, 0};
             int[] resSet;
@@ -185,6 +185,26 @@ public class Main {
             sol.zigZag(TreeNode.fromArrayBalanced(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}));
 
 
+        } else if(testNo == 17) {//Xtrain2
+            CrossTrainingII sol = new CrossTrainingII();
+//            RandomListNode test1 = new RandomListNode(1);
+//            RandomListNode test2 = new RandomListNode(2);
+//            RandomListNode test3 = new RandomListNode(3);
+//            RandomListNode test4 = new RandomListNode(4);
+//            RandomListNode test5 = new RandomListNode(5);
+//            test1.next = test2;
+//            test1.random = test1;
+//            test2.next = test3;
+//            test2.random = test2;
+//            test3.next = test4;
+//            test3.random = test3;
+//            test4.next = test5;
+//            test4.random = test4;
+//            test5.random = test5;
+//            sol.copy(test1);
+
+
+            sol.allPairs(new int[]{3,1,9,2,3}, 4);
         }
 
 
