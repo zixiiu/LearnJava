@@ -175,7 +175,7 @@ public class Main {
             System.out.println(a * 2);
             Exam2 t2 = new Exam2();
             int[] b = new int[]{20};
-            t2.test(b);
+                    t2.test(b);
             System.out.println(b[0]);
             t2.minCut("aaaaaabbabb");
 
@@ -205,6 +205,9 @@ public class Main {
 
 
             sol.allPairs(new int[]{3,1,9,2,3}, 4);
+
+            TreeNode root = TreeNode.fromArrayBalanced(new Integer[]{1,2,3,4,5,6,7});
+            sol.exist(root, 6);
         }
 
 
