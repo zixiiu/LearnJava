@@ -14,8 +14,11 @@ public class Exam3 {
     }
 
     private void addSpaceHelper(String input, StringBuilder tmpRes, List<String> res, int index) {
-        if (index == input.length() - 2) {//stop at the last char.
+        if (index == input.length() - 1) {//stop at the last char.
+            tmpRes.append(input.charAt(index));
             res.add(tmpRes.toString());
+            tmpRes.deleteCharAt(tmpRes.length() - 1);
+            return;
         }
         tmpRes.append(input.charAt(index));//do not add space
         addSpaceHelper(input, tmpRes, res, index + 1);
