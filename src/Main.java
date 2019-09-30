@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int testNo = 17;
+        int testNo = 18;
         if (testNo == 1) { //QuickSort
             int[] testSet = new int[]{4, 2, 5, 4, 7, 5, 9, 4, 8, 6, 9, 3, 6, 0};
             int[] resSet;
@@ -205,6 +205,10 @@ public class Main {
 
 
             sol.allPairs(new int[]{3,1,9,2,3}, 4);
+        }else if(testNo == 18){//exam3
+            Exam3 sol = new Exam3();
+            sol.cut(20);
+            sol.canCircle(new String[] {"aaa", "bbb", "baa", "aab"});
         }
 
 
