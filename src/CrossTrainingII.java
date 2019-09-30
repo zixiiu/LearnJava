@@ -210,8 +210,8 @@ public class CrossTrainingII {
         Queue<KMergeElement> pq = new PriorityQueue<>();
 
         int count = 0;
-        for(int[] i : arrayOfArrays){
-            for(int j : i){
+        for (int[] i : arrayOfArrays) {
+            for (int j : i) {
                 count++;
             }
         }
@@ -220,14 +220,14 @@ public class CrossTrainingII {
         int fillIndex = 0;
 
         for (int i = 0; i < arrayOfArrays.length; i++) { // for all array
-            if(arrayOfArrays[i].length != 0) {
+            if (arrayOfArrays[i].length != 0) {
                 pq.add(new KMergeElement(0, i, arrayOfArrays[i][0]));
             }
         }
-        while(!pq.isEmpty()){
+        while (!pq.isEmpty()) {
             KMergeElement cur = pq.poll();
-            if(arrayOfArrays[cur.arrayIndex].length - 1 != cur.index){//not the last one
-                pq.add(new KMergeElement(cur.index+1, cur.arrayIndex, arrayOfArrays[cur.arrayIndex][cur.index+1]));
+            if (arrayOfArrays[cur.arrayIndex].length - 1 != cur.index) {//not the last one
+                pq.add(new KMergeElement(cur.index + 1, cur.arrayIndex, arrayOfArrays[cur.arrayIndex][cur.index + 1]));
             }
             res[fillIndex] = cur.value;
             fillIndex++;
@@ -240,9 +240,9 @@ public class CrossTrainingII {
     public int closest(TreeNode root, int target) {
         TreeNode cur = root;
         int prev;
-        while(true){
+        while (true) {
 
-            if(target < cur.key) cur = cur.left;
+            if (target < cur.key) cur = cur.left;
             else cur = cur.right;
 
         }
@@ -252,9 +252,9 @@ public class CrossTrainingII {
     //2Sum using hashset
     public boolean existSum(int[] array, int target) {
         Set<Integer> exist = new HashSet<>();
-        for(int i = 0; i < array.length; i++){
-            if(exist.contains(target - array[i])) return true;
-            if(!exist.contains(array[i])) exist.add(array[i]);
+        for (int i = 0; i < array.length; i++) {
+            if (exist.contains(target - array[i])) return true;
+            if (!exist.contains(array[i])) exist.add(array[i]);
         }
         return false;
     }
@@ -264,14 +264,14 @@ public class CrossTrainingII {
     public List<List<Integer>> allPairs(int[] array, int target) {
         Map<Integer, List<Integer>> exist = new HashMap<>();
         List<List<Integer>> res = new ArrayList<>();
-        for(int i = 0; i < array.length; i++){
-            if(exist.containsKey(target - array[i])) {
-                for (int each : exist.get(target - array[i])){
+        for (int i = 0; i < array.length; i++) {
+            if (exist.containsKey(target - array[i])) {
+                for (int each : exist.get(target - array[i])) {
                     res.add(Arrays.asList(i, each));
                 }
 
             }
-            if(!exist.containsKey(array[i])) {
+            if (!exist.containsKey(array[i])) {
                 exist.put(array[i], new ArrayList<>());
             }
             exist.get(array[i]).add(i);
@@ -284,17 +284,42 @@ public class CrossTrainingII {
         Set<Integer> exist = new HashSet<>();
         List<List<Integer>> res = new ArrayList<>();
         Set<Integer> added = new HashSet<>();
-        for(int i = 0; i < array.length; i++){
-            if(exist.contains(target - array[i])){
-                if (!added.contains(array[i])){
+        for (int i = 0; i < array.length; i++) {
+            if (exist.contains(target - array[i])) {
+                if (!added.contains(array[i])) {
                     res.add(Arrays.asList(array[i], target - array[i]));
                     added.add(array[i]);
                     added.add(target - array[i]);
                 }
-            };
-            if(!exist.contains(array[i])) exist.add(array[i]);
+            }
+            ;
+            if (!exist.contains(array[i])) exist.add(array[i]);
         }
         return res;
+    }
+
+    // Binary tree Sum to target
+    public boolean exist(TreeNode root, int target) {
+        Map<Integer, Integer> tmpSum = new HashMap<>();
+        boolean[] res = new boolean[1];
+        tmpSum.put(0, 1);
+        existHelper(root, target, tmpSum, 0, res);
+        return res[0];
+    }
+
+    private void existHelper(TreeNode root, int target, Map<Integer, Integer> tmpSum, int preSum, boolean[] res) {
+        if (root != null) preSum += root.key;
+        if (tmpSum.containsKey(preSum - target)) {
+            res[0] = true;
+            return;
+        }
+        if (root == null) return;
+        if (tmpSum.containsKey(preSum)) tmpSum.replace(preSum, tmpSum.get(preSum) + 1);
+        else tmpSum.put(preSum, 1);
+        existHelper(root.left, target, tmpSum, preSum, res);
+        existHelper(root.right, target, tmpSum, preSum, res);
+        if (tmpSum.get(preSum) == 1) tmpSum.remove(preSum);
+        else tmpSum.replace(preSum, tmpSum.get(preSum) - 1);
     }
 
 }
