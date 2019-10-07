@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int testNo = 18;
+        int testNo = 19;
         if (testNo == 1) { //QuickSort
             int[] testSet = new int[]{4, 2, 5, 4, 7, 5, 9, 4, 8, 6, 9, 3, 6, 0};
             int[] resSet;
@@ -208,6 +208,9 @@ public class Main {
         }else if(testNo == 18){//exam3
             Exam3 sol = new Exam3();
             sol.addSpace("abcdef");
+        } else if (testNo == 19) {//DFS2
+            DFSII sol = new DFSII();
+            sol.combinations(12);
         }
 
 

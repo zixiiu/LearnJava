@@ -31,28 +31,27 @@ public class Exam3 {
     }
 
 
-    public boolean isCousins(TreeNode root, TreeNode a, TreeNode b){
+    public boolean isCousins(TreeNode root, int a, int b){
         //assume a and b are all in the tree.
         int res = isCousinsHelper( root,  a,  b);
-        if (res == -3) return true;
-        return false;
-
+        return res == -3;
     }
 
-    private int isCousinsHelper(TreeNode root, TreeNode a, TreeNode b){
-        if (root == null) return -1;
-        if (root == a || root == b) return 0;
+    private int isCousinsHelper(TreeNode root, int a, int b){
+        if (root == null) return -1; //reach the end but not finding anything
+        if (root.key == a || root.key == b) return 0; // found target
         int leftRes = isCousinsHelper( root.left,  a,  b);
         int rightRes = isCousinsHelper( root.right,  a,  b);
-        if(leftRes == -1 &&  rightRes == -1) return -1;
-        if(leftRes == -1) return rightRes + 1;
+        if(rightRes == -3 || leftRes == -3) return -3; // already found cousins on one side
+        if(leftRes == -1 &&  rightRes == -1) return -1; // no target on both side
+        if(leftRes == -1) return rightRes + 1; //target on one side
         if(rightRes == -1) return leftRes + 1;
         //both are not -1
-        if(leftRes != rightRes){// not in
+        if(leftRes != rightRes){// not in same level
             //-2: not cousin!
             return -2;
         }
-        if(leftRes == 1 && rightRes == 1){// in the same level but same parent
+        if(leftRes == 0 && rightRes == 0){// in the same level but same parent
             return -2;
         }
         //-3: is cousin

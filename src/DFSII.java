@@ -76,7 +76,7 @@ public class DFSII {
             return;
         }
         if (ll < l) {
-            if(dedup.peek() == null || dedup.peek() == 'm' || dedup.peek() == 'n') {
+            if (dedup.peek() == null || dedup.peek() == 'm' || dedup.peek() == 'n') {
                 sb.append('('); // add ll
                 dedup.push('l');
                 validParenthesesHelperIII(l, m, n, ll + 1, lr, ml, mr, nl, nr, res, sb, dedup);
@@ -85,7 +85,7 @@ public class DFSII {
             }
         }
         if (ml < m) {
-            if(dedup.peek() == null || dedup.peek() == 'n') {
+            if (dedup.peek() == null || dedup.peek() == 'n') {
                 sb.append('<'); // add ll
                 dedup.push('m');
                 validParenthesesHelperIII(l, m, n, ll, lr, ml + 1, mr, nl, nr, res, sb, dedup);
@@ -94,7 +94,7 @@ public class DFSII {
             }
         }
         if (nl < n) {
-            if(dedup.peek() == null) {
+            if (dedup.peek() == null) {
                 sb.append('{'); // add ll
                 dedup.push('n');
                 validParenthesesHelperIII(l, m, n, ll, lr, ml, mr, nl + 1, nr, res, sb, dedup);
@@ -129,6 +129,110 @@ public class DFSII {
                 dedup.push('n');
             }
         }
+    }
+
+    public List<String> subSets(String set) { //TODO: WRONG!
+        // Write your solution here.
+        List<String> res = new ArrayList<>();
+        if (set == null) return res;
+        subSetHelper(set, new StringBuilder(), 0, res);
+        return res;
+    }
+
+    private void subSetHelper(String set, StringBuilder sb, int index, List<String> res) {
+        if (index >= set.length()) {
+            res.add(sb.toString());
+            return;
+        }
+
+        //add
+        sb.append(set.charAt(index));
+        subSetHelper(set, sb, index + 1, res);
+        sb.deleteCharAt(sb.length() - 1);
+
+        //not
+        int next = index;
+        while (next < set.length() && set.charAt(index) == set.charAt(next)) {
+            next++;
+        }
+        subSetHelper(set, sb, next, res);
+
+    }
+
+
+    public List<String> subSetsOfSizeK(String set, int k) {
+        List<String> res = new ArrayList<>();
+        if (set == null) return res;
+        subSetsOfSizeKHelper(set, new StringBuilder(), 0, res, k);
+        return res;
+    }
+
+    private void subSetsOfSizeKHelper(String set, StringBuilder sb, int index, List<String> res, int k) {
+        if (sb.length() >= k) {
+            res.add(sb.toString());
+            return;
+        }
+        if (index >= set.length()) {
+            return;
+        }
+
+
+        //add
+        sb.append(set.charAt(index));
+        subSetsOfSizeKHelper(set, sb, index + 1, res, k);
+        sb.deleteCharAt(sb.length() - 1);
+
+        //not
+        int next = index;
+        while (next < set.length() && set.charAt(index) == set.charAt(next)) {
+            next++;
+        }
+        subSetsOfSizeKHelper(set, sb, next, res, k);
+
+    }
+
+    public List<List<Integer>> combinations(int target) {
+        // get minimum factors
+        List<List<Integer>> res = new ArrayList<>();
+        if (target == 1) return res;
+        List<Integer> factors = allFactors(target);
+        combinationsHelper(target, res, new ArrayList<>(), factors, 0);
+        return res;
+    }
+
+    private List<Integer> allFactors(int target) {
+        List<Integer> res = new ArrayList<>();
+        for (int i = target - 1; i > 1; i--) {
+            if (target % i == 0){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+
+    private void combinationsHelper(int rem, List<List<Integer>> res, List<Integer> tmp, List<Integer> factors, int factorIndex) {
+        // done
+        if (factorIndex == factors.size()) {
+            if(rem == 1) {
+                res.add(new ArrayList<>(tmp));
+            }
+            return;
+        }
+        int divider = factors.get(factorIndex);
+        for (int i = 0; Math.pow(divider, i) <= rem; i++) {
+            if (i == 0 || rem % Math.pow(divider, i) == 0) {
+                for (int j = 0; j < i; j++) {
+                    tmp.add(divider);
+                }
+                combinationsHelper(i == 0 ? rem : rem / (int) Math.pow(divider, i), res, tmp, factors, factorIndex + 1);
+                for (int j = 0; j < i; j++) {
+                    tmp.remove(tmp.size() - 1);
+                }
+
+
+            }
+        }
+
     }
 
 }
