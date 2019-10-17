@@ -203,7 +203,7 @@ public class DFSII {
     private List<Integer> allFactors(int target) {
         List<Integer> res = new ArrayList<>();
         for (int i = target - 1; i > 1; i--) {
-            if (target % i == 0){
+            if (target % i == 0) {
                 res.add(i);
             }
         }
@@ -213,7 +213,7 @@ public class DFSII {
     private void combinationsHelper(int rem, List<List<Integer>> res, List<Integer> tmp, List<Integer> factors, int factorIndex) {
         // done
         if (factorIndex == factors.size()) {
-            if(rem == 1) {
+            if (rem == 1) {
                 res.add(new ArrayList<>(tmp));
             }
             return;
@@ -233,6 +233,43 @@ public class DFSII {
             }
         }
 
+    }
+
+    public int[] keepDistance(int k) {
+        Map<Integer, Integer> canPlaceAfter = new HashMap<>();
+        int[] res = new int[2 * k];
+        int[] firstSol = new int[2 * k];
+        keepDistanceHelper(k, 0, res, canPlaceAfter, firstSol);
+        return firstSol[res.length-1] != 0 ? firstSol : null;
+    }
+
+    public void keepDistanceHelper(int k, int index, int[] res, Map<Integer, Integer> canPlaceAfter, int[] firstSol) {
+        if (firstSol[0] != 0) return;
+        if (index == k * 2) {
+            for(int i = 0; i < res.length; i++){
+                firstSol[i] = res[i];
+            }
+            return;
+        }
+
+
+        for (int i = 1; i <= k; i++) {
+            if (!canPlaceAfter.containsKey(i)) {//never done i. Place it anyway
+                res[index] = i;
+                canPlaceAfter.put(i, index + i + 1);
+                keepDistanceHelper(k, index + 1, res, canPlaceAfter, firstSol);
+                canPlaceAfter.remove(i);
+                res[index] = 0;
+            }
+            else if (canPlaceAfter.containsKey(i) && canPlaceAfter.get(i) != -1 && canPlaceAfter.get(i) == index) {//did it before and can place.
+                res[index] = i;
+                int tmp = canPlaceAfter.get(i);
+                canPlaceAfter.replace(i, -1);
+                keepDistanceHelper(k, index + 1, res, canPlaceAfter, firstSol);
+                canPlaceAfter.replace(i, tmp);
+                res[index] = 0;
+            }
+        }
     }
 
 }

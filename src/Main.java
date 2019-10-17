@@ -202,6 +202,7 @@ public class Main {
 //            test4.random = test4;
 //            test5.random = test5;
 //            sol.copy(test1);
+            sol.allTriples(new int[]{1,1,1,1,1,1,1,1,1}, 3);
 
 
             sol.allPairs(new int[]{3,1,9,2,3}, 4);
@@ -210,7 +211,7 @@ public class Main {
             sol.addSpace("abcdef");
         } else if (testNo == 19) {//DFS2
             DFSII sol = new DFSII();
-            sol.combinations(12);
+            sol.keepDistance(3);
         }
 
 

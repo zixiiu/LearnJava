@@ -279,24 +279,6 @@ public class CrossTrainingII {
         return res;
     }
 
-    //2Sum distinct pairs
-    public List<List<Integer>> allPairsDistinct(int[] array, int target) {
-        Set<Integer> exist = new HashSet<>();
-        List<List<Integer>> res = new ArrayList<>();
-        Set<Integer> added = new HashSet<>();
-        for (int i = 0; i < array.length; i++) {
-            if (exist.contains(target - array[i])) {
-                if (!added.contains(array[i])) {
-                    res.add(Arrays.asList(array[i], target - array[i]));
-                    added.add(array[i]);
-                    added.add(target - array[i]);
-                }
-            }
-            ;
-            if (!exist.contains(array[i])) exist.add(array[i]);
-        }
-        return res;
-    }
 
     // Binary tree Sum to target
     public boolean exist(TreeNode root, int target) {
@@ -320,6 +302,78 @@ public class CrossTrainingII {
         existHelper(root.right, target, tmpSum, preSum, res);
         if (tmpSum.get(preSum) == 1) tmpSum.remove(preSum);
         else tmpSum.replace(preSum, tmpSum.get(preSum) - 1);
+    }
+
+    //2Sum distinct pairs
+    public List<List<Integer>> allPairsDistinct(int[] array, int target) {
+        Set<Integer> exist = new HashSet<>();
+        List<List<Integer>> res = new ArrayList<>();
+        Set<Integer> added = new HashSet<>();
+        for (int i = 0; i < array.length; i++) {
+            if (exist.contains(target - array[i])) {
+                if (!added.contains(array[i])) {
+                    res.add(Arrays.asList(array[i], target - array[i]));
+                    added.add(array[i]);
+                    added.add(target - array[i]);
+                }
+            }
+            if (!exist.contains(array[i])) exist.add(array[i]);
+        }
+        return res;
+    }
+
+
+    //3Sum distinct pairs
+    public List<List<Integer>> allTriples(int[] array, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Set<Integer> added = new HashSet<>();
+        for (int i = 0; i < array.length; i++) {
+            if (!added.contains(array[i])) {
+                allPairsDistinctFor3Sum(array, target - array[i], array[i], res, added, i);
+            }
+        }
+        return res;
+    }
+
+    public void allPairsDistinctFor3Sum(int[] array, int target, int thisIterNum, List<List<Integer>> res, Set<Integer> added3, int mask) {
+        Set<Integer> exist = new HashSet<>();
+        // List<List<Integer>> res = new ArrayList<>();
+        Set<Integer> added = new HashSet<>();
+        for (int i = 0; i < array.length; i++) {
+            if (i == mask) continue;
+            if (exist.contains(target - array[i])) {
+                if (!added.contains(array[i])) {
+                    res.add(Arrays.asList(array[i], target - array[i], thisIterNum));
+                    added.add(array[i]);
+                    added.add(target - array[i]);
+                    added3.add(array[i]);
+                    added3.add(target - array[i]);
+                    added3.add(thisIterNum);
+                }
+            }
+            if (!exist.contains(array[i])) exist.add(array[i]);
+        }
+        return;
+    }
+
+    //4 sum
+    public boolean exist4Sum(int[] array, int target) {
+        for(int i = 0; i < array.length; i++){
+            for(int j = 0; j < array.length; j++){
+                if(existSumFor4Sum(array, target - array[i] - array[j], i, j)) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existSumFor4Sum(int[] array, int target, int mask1, int mask2) {
+        Set<Integer> exist = new HashSet<>();
+        for (int i = 0; i < array.length; i++) {
+            if(i == mask1 || i == mask2) continue;
+            if (exist.contains(target - array[i])) return true;
+            if (!exist.contains(array[i])) exist.add(array[i]);
+        }
+        return false;
     }
 
 }
